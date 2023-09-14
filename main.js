@@ -1,50 +1,3 @@
-
-const onSubmit = (e) =>{
-	e.preventDefault();
-	// AFter submit
-	document.querySelector('.text').textContent='';
-	document.querySelector('#image').src = '';
-
-	const prompt = document.querySelector('#prompt').innerText;
-	const size = document.querySelector('#size').value;
-	if(prompt === ''){
-		alert('Please enter some prompt');
-		return;
-	}
-
-	generateImageRequest(prompt, size);
-};
-
-const generateImageRequest = async (prompt, size) =>{
-	try{
-		showSpinner();
-
-		const response = await fetch('./functions/generateImage', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				prompt,
-				size,
-			}),
-		});
-		if(!response.ok){
-			removeSpinner();
-			throw new Error('Image could not be generated ');
-		}
-
-		const data = await response.json();
-
-		const imageUrl = data.data;
-		document.querySelector('#image').src = imageUrl;
-		removeSpinner();
-	}
-	catch(e){
-		document.querySelector('.text').textContent = e.message;
-	}
-};
-
 const showSpinner = () =>{
 	document.querySelector('.spinner').classList.add('show');
 };
@@ -56,6 +9,36 @@ const addLogoClickListener = () =>{
 		location.reload();
 	});
 };
+
+const generateImageRequest = async (prompt) => {
+
+	const response = await axios.post('http://localhost:5500/create', {
+		prompt,
+	});
+
+	console.log(response);
+	const data = await response.json();
+
+	const imageUrl = data.data;
+	document.querySelector('#image').src = imageUrl;
+
+};
+
+const onSubmit = (e) =>{
+	e.preventDefault();
+	// AFter submit
+	document.querySelector('.text').textContent='';
+	document.querySelector('#image').src = '';
+
+	const prompt = document.querySelector('#prompt').innerText;
+	if(prompt === ''){
+		alert('Please enter some prompt');
+		return;
+	}
+
+	generateImageRequest(prompt);
+};
+
 // event listener for the logo
 addLogoClickListener();
 // event listener for the form
