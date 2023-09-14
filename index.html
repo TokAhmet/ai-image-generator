@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <link rel="stylesheet" href="spinner.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo" id="logo-reload">
+                <h2>AI Image Generator</h2>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li>
+                        <a href="https://beta.openai.com/docs" target="_blank">OpenAi API</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <form id="form">
+                <h1>Describe an Image prompt</h1>
+                <div class="form-control">
+                    <div id="prompt" contenteditable="true" placeholder="Enter a description for the image" required
+                        oninput="adjustSize(this)"></div>
+                </div>
+                <div class="form-control">
+                    <select id="size" name="size">
+                        <option value="256x256">Small</option>
+                        <option value="512x512">Medium</option>
+                        <option value="1024x1024">Large</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Generate Image</button>
+            </form>
+        </section>
+        <!-- Image section -->
+        <section class="image-container">
+            <div class="image-wrapper">
+                <h2 class="text"></h2>
+                <img src="" alt="" id="image" />
+            </div>
+        </section>
+    </main>
+    <script>
+        function adjustHeight(element){
+            element.style.height = 'auto';
+            element.style.width = 'auto';
+            element.style.height = element.scrollHeight + 'px';
+            element.style.width = element.scrollWidth + 'px';
+        }
+    </script>
+    <script src="main.js" defer></script>
+    <div class="spinner"></div>
+
+</body>
+
+</html>
