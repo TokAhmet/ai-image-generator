@@ -11,17 +11,27 @@ const addLogoClickListener = () =>{
 };
 
 const generateImageRequest = async (prompt) => {
+	try{x
+		showSpinner();
 
-	const response = await axios.post('http://localhost:5500/create', {
-		prompt,
-	});
+		const response = await axios.post('http://localhost:5500/createimage', {
+			prompt,
+		});
 
-	console.log(response);
-	const data = await response.json();
+		if(!response.ok){
+				console.log(response.data);
+				removeSpinner();
+				throw new Error('Image could not be generated ');
+		}
 
-	const imageUrl = data.data;
-	document.querySelector('#image').src = imageUrl;
+		document.querySelector('#image').src = response.data;
 
+		removeSpinner();
+	}
+
+	catch(e){
+			document.querySelector('.text').textContent = e.message;
+	}
 };
 
 const onSubmit = (e) =>{
@@ -41,5 +51,6 @@ const onSubmit = (e) =>{
 
 // event listener for the logo
 addLogoClickListener();
+
 // event listener for the form
 document.querySelector('#form').addEventListener('submit', onSubmit);

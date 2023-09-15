@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname)));
 
 app.listen(port, () => console.log(`Running on port ${port}` ));
 
-app.post('/create', async (req, res) => {
+app.post('/createimage', async (req, res) => {
 	const { prompt } = req.body;
 	try {
 		const response = await openai.images.generate({
